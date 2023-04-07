@@ -14,11 +14,13 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
 }
 
 .card-parrot {
     width: 117px;
     height: 146px;
+    margin: 17px;
     position: relative;
 }
 
@@ -76,4 +78,22 @@ h1 {
 
     color: #75B79E;
 
+}
+
+@media (max-width: 335px) {
+    main, .container-cards {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 36px;
+        text-align: center;
+        line-height: 42px;
+    }
+
+    main {
+        padding-top: 40px;
+    }
 }
