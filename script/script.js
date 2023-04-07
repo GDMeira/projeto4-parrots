@@ -1,15 +1,11 @@
 let numberOfCardsRotated = 0;
 let card1;
 let card2;
-let numberOfCards = prompt('Digite o nro de cartas que você quer no jogo: ');
-let cards;
 let permissionToClick = true;
 let numberOfPlays = 0;
-
-while (!checkNumberOfCards()) {
-    numberOfCards = prompt('Digite o nro de cartas que você quer no jogo: ');
-}
-
+let idInterval;
+let time = 0;
+let numberOfCards;
 const images = ['./images/unicornparrot.gif',
                 './images/tripletsparrot.gif',
                 './images/revertitparrot.gif',
@@ -19,7 +15,18 @@ const images = ['./images/unicornparrot.gif',
                 './images/bobrossparrot.gif'];
 images.sort(randomizer);
 
-populateContainerCards();
+initiateGame();
+
+function initiateGame() {
+    numberOfCards = prompt('Digite o nro de cartas que você quer no jogo: ');
+
+    while (!checkNumberOfCards()) {
+        numberOfCards = prompt('O nro de cartas deve ser par e estar entre 4 e 14: ');
+    }
+
+    idInterval = setInterval(updateTimer, 1000);
+    populateContainerCards();
+}
 
 function checkNumberOfCards() {
     return (numberOfCards >= 4 && numberOfCards <= 14 && numberOfCards%2 == 0);
@@ -30,11 +37,11 @@ function randomizer() {
 }
 
 function populateContainerCards() {
-    cards = [];
+    let cards = [];
 
     for (let i = 0; i < numberOfCards / 2; i++) {
         const card = `
-        <div class="card-parrot" onclick="rotate(this) data-test="card"">
+        <div class="card-parrot" onclick="rotate(this)" data-test="card">
             <div class="front-face face">
                 <div>
                     <img src="./images/back.png" alt="parrot" data-test="face-down-image">
@@ -53,6 +60,7 @@ function populateContainerCards() {
     
     cards.sort(randomizer);
     const container = document.querySelector('.container-cards');
+    container.innerHTML = '';
     
     for (let i = 0; i < numberOfCards; i++) {
         container.innerHTML += cards[i];
@@ -107,7 +115,18 @@ function checkCards(card) {
 
 function checkEndGame() {
     const numberOfHittedCards = document.querySelectorAll('.back-face-rotation').length;
+
     if (numberOfHittedCards == numberOfCards) {
-        alert(`Você ganhou em ${numberOfPlays} jogadas!`);
+        clearInterval(idInterval);
+        alert(`Você ganhou em ${numberOfPlays} jogadas! A duração do jogo foi de ${time} segundos!`);
+        const restart = prompt('Você gostaria de reinicar a partida?');
+
+        if (restart === 'sim') {
+            initiateGame();
+        }
     }
+}
+
+function updateTimer() {
+    document.querySelector('.timer').innerHTML = ++time;
 }

@@ -2,10 +2,29 @@ main {
     width: 1110px;
     height: 629px;
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     background: #EEF9BF;
+}
+
+.timer-container {
+    position: absolute;
+    top: 0;
+    right: 40px;
+    height: 100%;
+}
+
+.timer {
+    width: 50px;
+    height: 50px;
+    position: sticky;
+    top: 40px;
+    background-color: #000000;
+    color: antiquewhite;
+    font-size: 40px;
+    text-align: center;
 }
 
 .container-cards {
@@ -95,5 +114,9 @@ h1 {
 
     main {
         padding-top: 40px;
+    }
+
+    .timer {
+        top: 90px;
     }
 }
