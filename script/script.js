@@ -119,7 +119,7 @@ function checkEndGame() {
     if (numberOfHittedCards == numberOfCards) {
         clearInterval(idInterval);
         alert(`Você ganhou em ${numberOfPlays} jogadas! A duração do jogo foi de ${time} segundos!`);
-        const restart = prompt('Você gostaria de reinicar a partida?');
+        const restart = prompt('Você gostaria de reinicar a partida? (sim ou não)');
 
         if (restart === 'sim') {
             initiateGame();
