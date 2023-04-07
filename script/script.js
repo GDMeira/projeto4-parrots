@@ -34,15 +34,15 @@ function populateContainerCards() {
 
     for (let i = 0; i < numberOfCards / 2; i++) {
         const card = `
-        <div class="card-parrot" onclick="rotate(this)">
+        <div class="card-parrot" onclick="rotate(this) data-test="card"">
             <div class="front-face face">
                 <div>
-                    <img src="./images/back.png" alt="parrot">
+                    <img src="./images/back.png" alt="parrot" data-test="face-down-image">
                 </div>
             </div>
             <div class="back-face face">
                 <div>
-                    <img src=${images[i]} alt="">
+                    <img src=${images[i]} alt="" data-test="face-up-image">
                 </div>
             </div>
         </div>`
