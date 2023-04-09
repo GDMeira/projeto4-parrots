@@ -14,6 +14,10 @@ const images = ['./images/unicornparrot.gif',
                 './images/explodyparrot.gif',
                 './images/bobrossparrot.gif'];
 images.sort(randomizer);
+const frontFaceDiv = '.front-face';
+const frontFaceRotation = 'front-face-rotation';
+const backFaceDiv = '.back-face';
+const backFaceRotation = 'back-face-rotation';
 
 initiateGame();
 
@@ -24,22 +28,27 @@ function initiateGame() {
         numberOfCards = prompt('O nro de cartas deve ser par e estar entre 4 e 14: ');
     }
 
-    idInterval = setInterval(updateTimer, 1000);
+    const timeIntervalMiliSeconds = 1000;
+    idInterval = setInterval(updateTimer, timeIntervalMiliSeconds);
     populateContainerCards();
 }
 
 function checkNumberOfCards() {
-    return (numberOfCards >= 4 && numberOfCards <= 14 && numberOfCards%2 == 0);
+    const minimumCards = 4;
+    const maximumCards = 14;
+    const isNumberOfCardsEven = numberOfCards%2;
+    return (numberOfCards >= minimumCards && numberOfCards <= maximumCards && isNumberOfCardsEven === 0);
 }
 
 function randomizer() {
-    return Math.random() - 0.5;
+    return Math.random();
 }
 
 function populateContainerCards() {
-    let cards = [];
+    const cards = [];
+    const halfNumberOfCards = numberOfCards / 2;
 
-    for (let i = 0; i < numberOfCards / 2; i++) {
+    for (let i = 0; i < halfNumberOfCards; i++) {
         const card = `
         <div class="card-parrot" onclick="rotate(this)" data-test="card">
             <div class="front-face face">
@@ -52,16 +61,16 @@ function populateContainerCards() {
                     <img src=${images[i]} alt="" data-test="face-down-image">
                 </div>
             </div>
-        </div>`
-    
+        </div>`;
+
         cards.push(card);
         cards.push(card);
     }
-    
+
     cards.sort(randomizer);
     const container = document.querySelector('.container-cards');
     container.innerHTML = '';
-    
+
     for (let i = 0; i < numberOfCards; i++) {
         container.innerHTML += cards[i];
     }
@@ -69,8 +78,8 @@ function populateContainerCards() {
 
 function rotate(card) {
     if (permissionToClick) {
-        card.querySelector('.front-face').classList.add('front-face-rotation');
-        card.querySelector('.back-face').classList.add('back-face-rotation');
+        card.querySelector(frontFaceDiv).classList.add(frontFaceRotation);
+        card.querySelector(backFaceDiv).classList.add(backFaceRotation);
         numberOfPlays++;
 
         permissionToClick = false;
@@ -79,11 +88,11 @@ function rotate(card) {
 }
 
 function unrotate() {
-    card1.querySelector('.front-face').classList.remove('front-face-rotation');
-    card1.querySelector('.back-face').classList.remove('back-face-rotation');
+    card1.querySelector(frontFaceDiv).classList.remove(frontFaceRotation);
+    card1.querySelector(backFaceDiv).classList.remove(backFaceRotation);
 
-    card2.querySelector('.front-face').classList.remove('front-face-rotation');
-    card2.querySelector('.back-face').classList.remove('back-face-rotation');
+    card2.querySelector(frontFaceDiv).classList.remove(frontFaceRotation);
+    card2.querySelector(backFaceDiv).classList.remove(backFaceRotation);
 
     numberOfCardsRotated = 0;
     permissionToClick = true;
@@ -91,7 +100,7 @@ function unrotate() {
 
 function checkCards(card) {
 
-    if (numberOfCardsRotated == 0) {
+    if (numberOfCardsRotated === 0) {
         card1 = card;
         numberOfCardsRotated++;
         permissionToClick = true;
@@ -104,19 +113,20 @@ function checkCards(card) {
     const imgCard1 = card1.querySelector('.back-face img').getAttribute('src');
     const imgCard2 = card2.querySelector('.back-face img').getAttribute('src');
 
-    if (imgCard1 == imgCard2) {
+    if (imgCard1 === imgCard2) {
         checkEndGame();
         numberOfCardsRotated = 0;
         permissionToClick = true;
     } else {
-        setTimeout(unrotate, 1000);
+        const timeIntervalMiliSeconds = 1000;
+        setTimeout(unrotate, timeIntervalMiliSeconds);
     }
 }
 
 function checkEndGame() {
     const numberOfHittedCards = document.querySelectorAll('.back-face-rotation').length;
 
-    if (numberOfHittedCards == numberOfCards) {
+    if (numberOfHittedCards === numberOfCards) {
         clearInterval(idInterval);
         alert(`Você ganhou em ${numberOfPlays} jogadas! A duração do jogo foi de ${time} segundos!`);
         const restart = prompt('Você gostaria de reinicar a partida? (sim ou não)');
