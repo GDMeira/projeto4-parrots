@@ -44,12 +44,12 @@ function populateContainerCards() {
         <div class="card-parrot" onclick="rotate(this)" data-test="card">
             <div class="front-face face">
                 <div>
-                    <img src="./images/back.png" alt="parrot" data-test="face-down-image">
+                    <img src="./images/back.png" alt="parrot" data-test="face-up-image">
                 </div>
             </div>
             <div class="back-face face">
                 <div>
-                    <img src=${images[i]} alt="" data-test="face-up-image">
+                    <img src=${images[i]} alt="" data-test="face-down-image">
                 </div>
             </div>
         </div>`
