@@ -22,10 +22,10 @@ const backFaceRotation = 'back-face-rotation';
 initiateGame();
 
 function initiateGame() {
-    numberOfCards = prompt('Digite o nro de cartas que você quer no jogo: ');
+    numberOfCards = Number( prompt('Digite o nro de cartas que você quer no jogo: ') );
 
     while (!checkNumberOfCards()) {
-        numberOfCards = prompt('O nro de cartas deve ser par e estar entre 4 e 14: ');
+        numberOfCards = Number( prompt('O nro de cartas deve ser par e estar entre 4 e 14: ') );
     }
 
     const timeIntervalMiliSeconds = 1000;
@@ -41,7 +41,7 @@ function checkNumberOfCards() {
 }
 
 function randomizer() {
-    return Math.random();
+    return Math.random() - 0.5;
 }
 
 function populateContainerCards() {
@@ -130,6 +130,10 @@ function checkEndGame() {
         clearInterval(idInterval);
         alert(`Você ganhou em ${numberOfPlays} jogadas! A duração do jogo foi de ${time} segundos!`);
         const restart = prompt('Você gostaria de reinicar a partida? (sim ou não)');
+
+        while (restart !== 'sim' || restart !== 'não') {
+            restart = prompt('Você gostaria de reinicar a partida? (sim ou não)');
+        }
 
         if (restart === 'sim') {
             initiateGame();
