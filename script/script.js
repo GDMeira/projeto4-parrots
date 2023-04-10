@@ -37,8 +37,8 @@ function initiateGame() {
 function checkNumberOfCards() {
     const minimumCards = 4;
     const maximumCards = 14;
-    const isNumberOfCardsEven = numberOfCards%2;
-    return (numberOfCards >= minimumCards && numberOfCards <= maximumCards && isNumberOfCardsEven === 0);
+    const isNumberOfCardsEven = (numberOfCards%2) === 0;
+    return (numberOfCards >= minimumCards && numberOfCards <= maximumCards && isNumberOfCardsEven);
 }
 
 function randomizer() {
