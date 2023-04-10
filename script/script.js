@@ -28,6 +28,7 @@ function initiateGame() {
         numberOfCards = Number( prompt('O nro de cartas deve ser par e estar entre 4 e 14: ') );
     }
 
+    time = 0;
     const timeIntervalMiliSeconds = 1000;
     idInterval = setInterval(updateTimer, timeIntervalMiliSeconds);
     populateContainerCards();
@@ -78,6 +79,7 @@ function populateContainerCards() {
 
 function rotate(card) {
     if (permissionToClick) {
+        card.setAttribute('onclick','');
         card.querySelector(frontFaceDiv).classList.add(frontFaceRotation);
         card.querySelector(backFaceDiv).classList.add(backFaceRotation);
         numberOfPlays++;
@@ -90,9 +92,11 @@ function rotate(card) {
 function unrotate() {
     card1.querySelector(frontFaceDiv).classList.remove(frontFaceRotation);
     card1.querySelector(backFaceDiv).classList.remove(backFaceRotation);
+    card1.setAttribute('onclick','rotate(this)');
 
     card2.querySelector(frontFaceDiv).classList.remove(frontFaceRotation);
     card2.querySelector(backFaceDiv).classList.remove(backFaceRotation);
+    card2.setAttribute('onclick','rotate(this)');
 
     numberOfCardsRotated = 0;
     permissionToClick = true;
@@ -129,10 +133,10 @@ function checkEndGame() {
     if (numberOfHittedCards === numberOfCards) {
         clearInterval(idInterval);
         alert(`Você ganhou em ${numberOfPlays} jogadas! A duração do jogo foi de ${time} segundos!`);
-        const restart = prompt('Você gostaria de reinicar a partida? (sim ou não)');
+        let restart = prompt('Você gostaria de reinicar a partida? (sim ou não)');
 
-        while (restart !== 'sim' || restart !== 'não') {
-            restart = prompt('Você gostaria de reinicar a partida? (sim ou não)');
+        while ( (restart !== 'sim') && (restart !== 'não') ) {
+            restart = prompt('Você gostaria de reinicar a partida? (digite apenas sim ou não)');
         }
 
         if (restart === 'sim') {
